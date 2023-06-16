@@ -1,0 +1,65 @@
+<head>
+  <!-- Add these script tags to import the required libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.3/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+
+<div class="mode-header embed-hidden">
+  <h1>{{ title }}</h1>
+  <p>{{ description }}</p>
+</div>
+<div class="mode-grid container">
+  <div class="row">
+    <div class="col-md-12">
+      <mode-chart id="chart_c701f5710cb8" dataset="dataset" options="chart_options"></mode-chart>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <mode-chart id="chart_a3b8d789d46c" dataset="dataset" options="chart_options"></mode-chart>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <mode-chart id="chart_84c8e0e81b92" dataset="dataset" options="chart_options"></mode-chart>
+    </div>
+  </div>
+</div>
+
+<div class="button-container">
+  <div class="dl-btn" data-chart-id="chart_c701f5710cb8">Download [chart name 1]</div>
+  <div class="dl-btn" data-chart-id="chart_a3b8d789d46c">Download [chart name 2]</div>
+  <div class="dl-btn" data-chart-id="chart_84c8e0e81b92">Download [chart name 3]</div>
+</div>
+
+<style>
+  .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .dl-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #8ccf8e;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    text-align: center;
+  }
+</style>
+
+<script type='text/javascript'>
+  const buttons = document.getElementsByClassName('dl-btn');
+
+  for (let button of buttons) {
+    button.addEventListener('click', function (event) {
+      let chartId = button.getAttribute('data-chart-id');
+      let el = document.getElementById(chartId);
+      html2canvas(el).then(canvas => {
+        canvas.toBlob(blob => (window.saveAs(blob, chartId + '.png')));
+      });
+    });
+  }
+</script>
